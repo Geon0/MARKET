@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<mapping name="read" class="com.kcube.market.MarketItem">
+	<bean class="com.kcube.market.MarketItem">
+		<value name="id" />
+		<value name="title" />
+		<value name="clob" />
+		<value name="folder" method="jsonFolder" />
+		<value name="status" />
+		<value name="content" />
+		<value name="status_delete" />
+		<value name="lastUpdt" />
+		<value name="fileExt" />
+		<value name="folderId" />
+		<value name="scrtLevel" />
+		<value name="status" />
+		<value name="visible" />
+		<value name="rgstDate" />
+		<value name="step" />
+		<value name="cstmField1" />
+		<value name="cstmField2" />
+		<value name="cstmField3" />
+		<value name="mobile" />
+		<value name="sympathyCnt" />
+		<value name="isBest" />
+		<value name="isPriceBest" />
+		<value name="startTime" />
+		<value name="endTime" />
+		<value name="isDonate" />
+		<value name="startPrice" />
+		<value name="minimumAmount" />
+		<value name="immediatePurchase" />
+		<value name="currentPrice" />
+		<value name="purchaseTime" />
+		<value name="purchasePrice" />
+		<value name="purchaseUserid" />
+		<value name="purchaseDisp" />
+		<value name="author" />
+		<value name="purchaseComplete" />
+		<value name="tenantId" />
+		<value name="purchaseComplete" />
+		<value name="readCnt" method="transientCnt" />
+		<value name="classId" />
+		<value name="moduleId" />
+		<value name="appId" />
+		<value name="currentOwner" />
+		<value name="spaceId" />
+		<value name="sympathies" method="jsonSympathies" source="com.kcube.doc.symp.Sympathy"/>
+		<value name="attachments" source="com.kcube.market.MarketItem$Attachment" />
+		<value name="opinions" method="jsonOpinions" source="com.kcube.market.MarketItem$Opinion" />
+		<value name="securities" source="com.kcube.doc.Item$Security" />
+		<value name="tags" source="com.kcube.doc.Item$Tag" />
+	</bean>
+	<bean class="com.kcube.sys.usr.User">
+		<value name="name" />
+		<value name="displayName" />
+		<value name="id" method="userId" />
+	</bean>
+	<bean class="com.kcube.market.MarketItem$Attachment">
+		<value name="id" />
+		<value name="size" method="filesize" />
+		<value name="filename" />
+		<value name="path" />
+		<value name="type" />
+		<value name="method" />
+	</bean>
+	<bean class="com.kcube.doc.Item$Security">
+		<value name="xid" method="xidString" />
+		<value name="title" />
+		<value name="computed" />
+	</bean>
+	<bean class="com.kcube.doc.Item$Tag">
+		<value name="tag" />
+		<value name="itemDate" />
+		<value name="visible" />
+	</bean>
+	<bean class="com.kcube.market.MarketItem$Opinion">
+		<value name="id" />
+		<value name="itemId" />
+		<value name="gid" />
+		<value name="content" />
+		<value name="mobile" />
+		<value name="user" method="rgstUser" />
+		<value name="rgstDate" />
+		<value name="currentOwner" />
+	</bean>
+	<!-- necessarily -->
+	<bean class="com.kcube.doc.Item$Folder$Json">
+		<value name="id" />
+		<value name="rootId" />
+		<value name="computed" />
+		<value name="path" />
+	</bean>
+	<bean class="com.kcube.doc.opn.OpinionJson">
+		<value name="total" />
+		<value name="rest" />
+		<value name="array" />
+	</bean>
+	<bean class="com.kcube.doc.symp.Sympathy">
+		<value name="userId" />
+		<value name="name" />
+		<value name="displayName" />
+		<value name="sympType" />
+		<value name="instDate" />
+	</bean>
+	<bean class="com.kcube.doc.symp.SympathyJson">
+		<value name="total" />
+		<value name="rest" />
+		<value name="selfSymp" />
+		<value name="array" />
+	</bean>
+</mapping>

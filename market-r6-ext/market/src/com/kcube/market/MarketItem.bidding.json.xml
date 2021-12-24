@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<mapping name="bidding" class="com.kcube.marketBidding.MarketBiddingItem">
+	<bean class="com.kcube.marketBidding.MarketBiddingItem">
+		<value name="id" />
+		<value name="itemId"/>
+		<value name="displayName"/>
+		<value name="biddingTime" />
+		<value name="biddingPrice" />
+		<value name="isBiddingFinal" />
+		<value name="isBiddingCancel" />
+	</bean>
+</mapping>

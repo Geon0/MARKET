@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="cstm-app-dep" default="cstm-app-dep">
+	<property environment="env" />
+	<property name="app-base" value="${env.KCUBE_APPBASE}" />
+	<property name="project" value="market-r6-ext" />
+	<property name="deployWar" value="r6-0.6" />
+
+	<target name="clean">
+		<delete includeEmptyDirs="true" quiet="true">
+			<fileset dir="output" includes="**/*"></fileset>
+		</delete>
+	</target>
+	
+	<target name="deploy">
+		<unjar dest="output" src="war/${deployWar}.war" />
+	</target>
+
+	<target name="cstm-app-dep" depends="clean,deploy">
+		<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+		<foreach target="cstm-extr-app" param="warFile">
+			<path>
+				<fileset dir="war">
+					<include name="*.war" />
+					<exclude name="${deployWar}.war" />
+				</fileset>
+			</path>
+		</foreach>
+	</target>
+
+	<target name="cstm-extr-app">
+		<propertyregex property="name" input="${warFile}" regexp="([^\\|^/]*)\.[war|WAR]" select="\1" />
+		<delete dir="${app-base}/temp/${name}" />
+		<unjar src="${warFile}" dest="${app-base}/temp/${name}" />
+		<copy todir="../output" includeEmptyDirs="no">
+			<fileset dir="${app-base}/temp/${name}/web" />
+		</copy>
+		<copy todir="../output/WEB-INF/lib" includeEmptyDirs="no">
+			<fileset dir="${app-base}/temp/${name}/lib">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="../output/WEB-INF/classes/r6-app/basic">
+			<fileset dir="${app-base}/temp/${name}/conf">
+				<include name="*.conf.xml" />
+			</fileset>
+		</copy>
+	</target>
+</project>

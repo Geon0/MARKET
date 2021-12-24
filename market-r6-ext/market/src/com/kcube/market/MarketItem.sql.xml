@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql>
+	<table name="market_item">
+		<column groups="list,metro" name="itemid" alias="id" />
+		<column groups="list,metro" name="title" alias="title" />
+		<column groups="list" name="auth_userid" alias="userId" />
+		<column groups="list" name="auth_name" alias="userName" multilang="true" />
+		<column groups="list" name="rgst_userid" alias="rgstUserid" />
+		<column groups="list" name="rgst_name" alias="rgstName" />
+		<column groups="" name="content" alias="content" />
+		<column groups="list" name="opn_cnt" alias="opnCnt" />
+		<column groups="list" name="status" alias="status" />
+		<column groups="list" name="status_delete" alias="status_delete" />
+		<column groups="list" name="last_updt" alias="lastUpdt" />
+		<column groups="list" name="file_ext" alias="fileExt" />
+		<column groups="list" name="kmid" alias="kmid" />
+		<column groups="list" name="scrt_level" alias="scrtLevel" />
+		<column groups="list" name="isvisb" alias="isVisb" />
+		<column groups="" name="tag" alias="tag" />
+		<column groups="" name="auth_disp" alias="userDisp" />
+		<column groups="" name="content" alias="content" />
+		<column groups="list,metro" name="rgst_date" alias="rgstDate" />
+		<column groups="list" name="step" alias="step" />
+	  	<column groups="list" name="cstm_field1" alias="cstmField1" />
+		<column groups="list" name="cstm_field2" alias="cstmField2" />
+		<column groups="list" name="cstm_field3" alias="cstmField3" />
+		<column groups="list" name="ismobile" alias="isMobile" />
+		<column groups="list" name="sympathy_cnt" alias="sympathyCnt"/>
+		<column groups="list" name="isbest" alias="isBest"/>
+		<column groups="list" name="ispricebest" alias="isPriceBest"/>	
+		<column groups="list" name="start_time" alias="startTime"/>	
+		<column groups="list" name="end_time" alias="endTime"/>	
+		<column groups="list" name="isdonate" alias="isDonate"/>	
+		<column groups="list" name="start_price" alias="startPrice"/>	
+		<column groups="list" name="minimum_amount" alias="minimumAmount"/>	
+		<column groups="list" name="immediate_purchase" alias="immediatePurchase"/>	
+		<column groups="list" name="current_price" alias="currentPrice"/>	
+		<column groups="list" name="purchase_time" alias="purchaseTime"/>	
+		<column groups="list" name="purchase_price" alias="purchasePrice"/>	
+		<column groups="list" name="purchase_userid" alias="purchaseUserid"/>	
+		<column groups="list" name="purchase_disp" alias="purchaseDisp"/>	
+		<column groups="list" name="purchase_complete" alias="purchaseComplete"/>	
+		<column groups="list" name="sales_complete" alias="salesComplete"/>	
+		<column groups="list,metro" name="moduleid" alias="moduleId"/>
+		<column groups="list,metro" name="appid" alias="appId"/>
+		<column groups="list,metro" name="classid" alias="classId"/>
+		<column groups="list,metro" name="spid" alias="spaceId"/>
+		<column groups="list" name="read_cnt" alias="readCnt" />
+	</table>
+	<table name="market_item_bidding">
+		<column groups="list" name="biddingid" alias="biddingId" />
+		<column groups="list" name="itemid" alias="id" />
+		<column groups="list" name="userid" alias="userId" />
+		<column groups="list" name="name" alias="name" />
+		<column groups="list" name="user_disp" alias="userDisp" />
+		<column groups="list" name="bidding_time" alias="biddingTime" />
+		<column groups="list" name="bidding_price" alias="biddingPrice" />
+		<column groups="list" name="isbidding_final" alias="isBiddingFinal" />
+		<column groups="list" name="isbidding_cancel" alias="isBiddingCancel" />
+	</table>
+</sql>

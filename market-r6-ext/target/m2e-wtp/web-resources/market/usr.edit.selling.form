@@ -1,0 +1,10 @@
+<field property="title.edit"/>\
+<field property="folder.write"/>\
+<field property="dateTerm.edit" colSpan="4"/>\
+<field property="currentPrice.edit" colSpan="4"/>\
+<field property="immediatePurchase.edit" colSpan="4"/>\
+<field property="minimumAmount.edit" colSpan="4"/>\
+<field property="content.write"/>\
+<field property="tags.write"/>\
+<field property="attachments.write"/>\
+<field property="id.hidden"/>

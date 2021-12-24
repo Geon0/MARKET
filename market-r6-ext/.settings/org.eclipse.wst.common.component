@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+                        
+    
+    
+    
+    
+    <wb-module deploy-name="market-r6-ext">
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/web"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/market/src"/>
+                                                
+        
+        
+        
+        
+        <property name="java-output-path" value="/market-r6-ext/target/classes"/>
+                                
+        
+        
+        <property name="context-root" value="market-r6-ext"/>
+                                            
+    
+    
+    
+    
+    </wb-module>
+                    
+
+
+
+
+</project-modules>

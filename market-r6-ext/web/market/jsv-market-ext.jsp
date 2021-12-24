@@ -1,0 +1,3 @@
+<link type="text/css" href="<%= request.getContextPath() %>/market/market_min.css?nocache=<%=com.kcube.sys.AppServlet.getNoCacheStr() %>" rel="stylesheet">
+<script type="text/javascript" src="<%= request.getContextPath() %>/market/market_min.js?nocache=<%=com.kcube.sys.AppServlet.getNoCacheStr() %>"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/market/script.language.market.js?nocache=<%=com.kcube.sys.AppServlet.getNoCacheStr() %>"></script>

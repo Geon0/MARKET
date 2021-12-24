@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="com.kcube.market.MarketItem" table="market_item">
+		<id name="id" column="itemid" type="java.lang.Long">
+			<generator class="native">
+				<param name="sequence_name">SQ_MARKET_ITEM</param>
+			</generator>
+		</id>
+		<property name="title" column="title" type="com.kcube.lib.jdbc.EncString" />
+		<property name="clob" column="content" type="clob" />
+		<property name="opnCnt" column="opn_cnt" type="integer" />
+		<property name="status" column="status" type="integer" />
+		<property name="statusDelete" column="status_delete" type="integer" />
+		<property name="lastUpdt" column="last_updt" type="java.util.Date" />
+		<property name="fileExt" column="file_ext" type="com.kcube.lib.jdbc.EncString" />
+		<property name="scrtLevel" column="scrt_level" type="integer" />		
+		<property name="visible" column="isvisb" type="boolean" />
+		<property name="rgstDate" column="rgst_date" type="java.util.Date" />		
+		<property name="step" column="step" type="integer" />
+		<property name="cstmField1" column="cstm_field1" type="com.kcube.lib.jdbc.EncString" />
+		<property name="cstmField2" column="cstm_field2" type="com.kcube.lib.jdbc.EncString" />
+		<property name="cstmField3" column="cstm_field3" type="com.kcube.lib.jdbc.EncString" />		
+		<property name="mobile" column="ismobile" type="boolean" />
+		<property name="sympathyCnt" column="sympathy_cnt" type="integer" />
+		<property name="isBest" column="isbest" type="boolean" />
+		<property name="isPriceBest" column="ispricebest" type="boolean" />	
+		<property name="startTime" column="start_time" type="java.util.Date" />
+		<property name="endTime" column="end_time" type="java.util.Date" />
+		<property name="isDonate" column="isdonate" type="boolean" />
+		<property name="startPrice" column="start_price" type="java.lang.Long" />
+		<property name="minimumAmount" column="minimum_amount" type="java.lang.Long" />
+		<property name="immediatePurchase" column="immediate_purchase" type="java.lang.Long" />
+		<property name="currentPrice" column="current_price" type="java.lang.Long" />
+		<property name="purchaseTime" column="purchase_time" type="java.util.Date" />
+		<property name="purchasePrice" column="purchase_price" type="java.lang.Long" />
+		<property name="purchaseUserid" column="purchase_userid" type="java.lang.Long" />
+		<property name="purchaseName" column="purchase_name" type="com.kcube.lib.jdbc.EncString" />
+		<property name="purchaseDisp" column="purchase_disp" type="com.kcube.lib.jdbc.EncString" />
+		<property name="purchaseComplete" column="purchase_complete" type="java.util.Date" />
+		<property name="salesComplete" column="sales_complete" type="java.util.Date" />
+		<property name="readCnt" column="read_cnt" type="integer" />
+		<property name="tenantId" column="tenantid" type="java.lang.Long" />
+		<property name="classId" column="classid" type="java.lang.Long" />
+		<property name="moduleId" column="moduleid" type="java.lang.Long" />
+		<property name="appId" column="appid" type="java.lang.Long" />
+		<property name="spaceId" column="spid" type="java.lang.Long" />
+		<component name="author" class="com.kcube.sys.usr.User">
+			<property name="userId" column="auth_userid" type="java.lang.Long" />
+			<property name="name" column="auth_name" type="com.kcube.lib.jdbc.EncString" />
+			<property name="displayName" column="auth_disp" type="com.kcube.lib.jdbc.EncString" />
+		</component>
+		<component name="rgstUser" class="com.kcube.sys.usr.User">
+			<property name="userId" column="rgst_userid" type="java.lang.Long" />
+			<property name="name" column="rgst_name" type="com.kcube.lib.jdbc.EncString" />
+		</component>
+		<component name="folder" class="com.kcube.doc.Item$Folder">
+			<property name="folderId" column="kmid" type="java.lang.Long" />
+			<property name="level1" column="level1" type="java.lang.Long" />
+			<property name="level2" column="level2" type="java.lang.Long" />
+			<property name="level3" column="level3" type="java.lang.Long" />
+			<property name="level4" column="level4" type="java.lang.Long" />
+		</component>
+		<list name="securities" table="market_item_scrt" lazy="true">
+			<key column="itemid" />
+			<index column="seq_order" />
+			<composite-element class="com.kcube.doc.Item$Security">
+				<property name="xid" column="xid" type="java.lang.Long" />
+				<property name="title" column="title" type="com.kcube.lib.jdbc.EncString" />
+				<property name="visible" column="isvisb" type="boolean" />
+				<property name="computed" column="iscomp" type="boolean" />
+			</composite-element>
+		</list>
+		<list name="tags" table="market_item_tag" lazy="true">
+			<key column="itemid" />
+			<index column="seq_order" />
+			<composite-element class="com.kcube.doc.Item$Tag">
+				<property name="tag" column="tag" type="com.kcube.lib.jdbc.EncString" />
+				<property name="itemDate" column="item_date" type="java.util.Date" />
+				<property name="visible" column="isvisb" type="boolean" />
+			</composite-element>
+		</list>
+		
+		<set name="sympathies" table="market_item_sympathy" lazy="true" order-by="inst_date desc">
+			<key column="itemid" />
+			<composite-element class="com.kcube.doc.symp.Sympathy">
+				<property name="userId" column="userid" type="java.lang.Long" />
+				<property name="name" column="user_name" type="com.kcube.lib.jdbc.EncString" />
+				<property name="displayName" column="user_disp" type="com.kcube.lib.jdbc.EncString" />
+				<property name="sympType" column="symp_type" type="integer" />
+				<property name="instDate" column="inst_date" type="java.util.Date" />
+			</composite-element>
+		</set>
+
+		<set name="attachments" inverse="true" lazy="true" sort="natural">
+			<key column="itemid" />
+			<one-to-many class="com.kcube.market.MarketItem$Attachment" />
+		</set>
+		<set name="opinions" inverse="true" lazy="true" order-by="gid, opnid">
+			<key column="itemid" />
+			<one-to-many class="com.kcube.market.MarketItem$Opinion" />
+		</set>
+		<set name="biddings" inverse="true" lazy="true">
+			<key column="itemid" />
+			<one-to-many class="com.kcube.market.MarketItem$Bidding" />
+		</set> 
+	</class>
+	
+	<class name="com.kcube.market.MarketItem$Attachment" table="market_item_file">
+		<id name="id" column="fileid" type="java.lang.Long">
+			<generator class="native">
+				<param name="sequence_name">SQ_MARKET_ITEM_FILE</param>
+			</generator>
+		</id>
+		<property name="filename" column="file_name" type="com.kcube.lib.jdbc.EncString" />
+		<property name="filesize" column="file_size" type="java.lang.Long" />
+		<property name="path" column="save_path" type="com.kcube.lib.jdbc.EncString" />
+		<property name="dnldCnt" column="dnld_cnt" type="integer" />
+		<property name="type" column="save_code" type="integer" />
+		<many-to-one name="item" column="itemid" class="com.kcube.market.MarketItem" />
+	</class>
+	
+	<class name="com.kcube.market.MarketItem$Opinion" table="market_item_opn">
+		<id name="id" column="opnid" type="java.lang.Long">
+			<generator class="native">
+				<param name="sequence_name">SQ_MARKET_ITEM_OPN</param>
+			</generator>
+		</id>
+		<property name="gid" column="gid" type="java.lang.Long" />
+		<property name="itemId" column="itemid" type="java.lang.Long" />
+		<property name="mobile" column="ismobile" type="boolean" />
+		<property name="content" column="content" type="com.kcube.lib.jdbc.EncString" />
+		<property name="rgstDate" column="rgst_date" type="java.util.Date" />
+		<component name="rgstUser" class="com.kcube.sys.usr.User">
+			<property name="userId" column="userid" type="java.lang.Long" />
+			<property name="name" column="user_name" type="com.kcube.lib.jdbc.EncString" />
+			<property name="displayName" column="user_disp" type="com.kcube.lib.jdbc.EncString" />
+		</component>
+		<property name="rgstUserId" column="rgst_userid" type="java.lang.Long" />
+	</class>
+	
+	<class name="com.kcube.market.MarketItem$Bidding" table="market_item_bidding">
+		<id name="id" column="biddingid" type="java.lang.Long">
+			<generator class="native">
+				<param name="sequence_name">SQ_MARKET_ITEM_BIDDING</param>
+			</generator>
+		</id>
+		<property name="itemId" column="itemid" type="java.lang.Long" />
+		<component name="author" class="com.kcube.sys.usr.User">
+			<property name="userId" column="userid" type="java.lang.Long" />
+			<property name="displayName" column="user_disp" type="com.kcube.lib.jdbc.EncString" />
+			<property name="name" column="name" type="com.kcube.lib.jdbc.EncString" />
+		</component>
+		<property name="biddingTime" column="bidding_time" type="java.util.Date" />
+		<property name="biddingPrice" column="bidding_price" type="java.lang.Long" />
+		<property name="isBiddingFinal" column="isbidding_final" type="boolean" />
+		<property name="isBiddingCancel" column="isbidding_cancel" type="boolean" />
+	</class>
+</hibernate-mapping>

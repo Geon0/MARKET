@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration class="com.kcube.market.MarketItem" version="0.3.7" name="admCtgr" category="2000">
+	<title>{"ko":"사내마켓","en":"MARKET","zh":"布告栏","ja":"掲示板"}</title>
+	<description>
+		<ko>
+			<![CDATA[사내마켓입니다.]]>
+		</ko>
+		<ja>
+			<![CDATA[ユーザーが分類を定義できる掲示板です。]]>
+		</ja>
+	</description>
+	<developer>KCUBE</developer>
+	<indexUrl>/market/usr.index.jsp</indexUrl>
+	<manageUrl>/market/adm.index.jsp</manageUrl>
+	<iconCode>1</iconCode>
+	<data>
+	</data>
+	<tabs>
+		<map useCtgrMap="true" ctgrMapReadOnly="false" writeSecure="true" readSecure="true" anonymous="true"/>
+		<alimi>
+			<entry key="biddingNew" important="true" updateStr="5" name="{&quot;ko&quot;:&quot;입찰자 발생시 이전 입찰자에게 알림&quot;,&quot;en&quot;:&quot;When a reply is posted (Owner)&quot;,&quot;zh&quot;:&quot;回帖时(发帖人)&quot;,&quot;ja&quot;:&quot;書き込みに回答登録時(作成者)&quot;}" checked="true" >
+				<title>{"ko":"입찰자가 발생하였습니다.","en":"New bidding of your post","zh":"答案已张贴在帖子上。","ja":"私のエントリーに返答されました。"}</title>
+				<url>F:/market/usr.read.jsp?id=${item.id}</url>
+				<menuUrl>B:/market/usr.index.jsp</menuUrl>
+				<originUrl>B:/market/usr.index.jsp?url=/market/usr.read.jsp?id=${item.id}</originUrl>
+				<type>0</type>
+			</entry>
+			<entry key="biddingEnd" updateStr="3" name="{&quot;ko&quot;:&quot;경매종료시 알림&quot;,&quot;en&quot;:&quot;Notify me upon new comments&quot;,&quot;zh&quot;:&quot;发表意见时提醒&quot;,&quot;ja&quot;:&quot;コメントが登録された時&quot;}" checked="true" >
+				<title>{"ko":"경매가 종료되었습니다.","en":"A comment has been posted.","zh":"有发表的意见。","ja":"に意見が登録されました。"}</title>
+				<url>F:/market/usr.read.jsp?id=${item.id}</url>
+				<menuUrl>B:/market/usr.index.jsp</menuUrl>
+				<originUrl>B:/market/usr.index.jsp?url=/market/usr.read.jsp?id=${item.id}</originUrl>
+				<type>0</type>
+			</entry>
+			<entry key="clickSellButton" updateStr="2" name="{&quot;ko&quot;:&quot;구매완료 버튼 클릭시 알림&quot;,&quot;en&quot;:&quot;Notify me upon new comment replies&quot;,&quot;zh&quot;:&quot;意见有跟帖时提醒&quot;,&quot;ja&quot;:&quot;コメントに返信が登録された時&quot;}" checked="true" >
+				<title> {"ko":"판매완료처리를 부탁드립니다.","en":"A reply has been posted to my comment.","zh":"评论已发布在我的评论中。","ja":"私のコメントに返信されました。"}</title>
+				<url>F:/market/usr.read.jsp?id=${item.id}</url>
+				<menuUrl>B:/market/usr.index.jsp</menuUrl>
+				<originUrl>B:/market/usr.index.jsp?url=/market/usr.read.jsp?id=${item.id}</originUrl>
+				<type>0</type>
+			</entry>
+			<entry key="biddingDel" updateStr="4" name="{&quot;ko&quot;:&quot;입찰 삭제시 알림&quot;,&quot;en&quot;:&quot;Notify me when my posts are recommended&quot;,&quot;zh&quot;:&quot;推荐文章时的通知&quot;,&quot;ja&quot;:&quot;エントリーを薦められた時&quot;}" checked="true" >
+				<title> {"ko":"당신의 입찰이 삭제되었습니다..","en":"My post was recommended as knowledge","zh":"我的写作被推荐为知识。","ja":"私のエントリーが知識としておすすめされました。"}</title>
+				<url>F:/market/usr.read.jsp?id=${item.id}</url>
+				<menuUrl>B:/market/usr.index.jsp</menuUrl>
+				<originUrl>B:/market/usr.index.jsp?url=/market/usr.read.jsp?id=${item.id}</originUrl>
+				<type>0</type>
+			</entry>
+		</alimi>
+		<config proxy="com.kcube.market.MarketItemConfig" >
+			<entry key="sympathy" name="{&quot;ko&quot;:&quot;공감사용여부&quot;,&quot;en&quot;:&quot;공감사용여부&quot;,&quot;zh&quot;:&quot;공감사용여부&quot;,&quot;ja&quot;:&quot;共感を使用しますか。&quot;}" editLevel="user" component="BooleanFieldEditor" value="true" />
+			<entry key="sympathyIcons" name="{&quot;ko&quot;:&quot;공감아이콘선택&quot;,&quot;en&quot;:&quot;공감아이콘선택&quot;,&quot;zh&quot;:&quot;공감아이콘선택&quot;,&quot;ja&quot;:&quot;共感アイコン選択&quot;}" editLevel="user" component="SympathyIconSelectEditor" value="0" />
+			<entry key="biddingCnt" name="{&quot;ko&quot;:&quot;인기입찰 기준 갯수&quot;,&quot;en&quot;:&quot;Criteria for an Expert(Using knowledge activity history)&quot;,&quot;zh&quot;:&quot;인기입찰 기준 갯수&quot;,&quot;ja&quot;:&quot;인기입찰 기준 갯수&quot;}" editLevel="user" component="TextFieldEditor" value="10" />
+			<entry key="basicPeriod" name="{&quot;ko&quot;:&quot;경매 종료시간 기본처리 날짜(일)&quot;,&quot;en&quot;:&quot;Criteria for an Expert(Using knowledge activity history)&quot;,&quot;zh&quot;:&quot;경매 종료시간 기본처리 날짜(일)&quot;,&quot;ja&quot;:&quot;경매 종료시간 기본처리 날짜(일)&quot;}" editLevel="user" component="TextFieldEditor" value="7" />
+			<entry key="sellCompeleteDay" name="{&quot;ko&quot;:&quot;자동 판매완료 처리 기간(일)&quot;,&quot;en&quot;:&quot;Criteria for an Expert(Using knowledge activity history)&quot;,&quot;zh&quot;:&quot;자동 판매완료 처리 기간(일)&quot;,&quot;ja&quot;:&quot;자동 판매완료 처리 기간(일)&quot;}" editLevel="user" component="TextFieldEditor" value="7" />
+			<entry key="scrtLevel" name="{&quot;ko&quot;:&quot;defalut 보안&quot;,&quot;en&quot;:&quot;Default Security&quot;,&quot;zh&quot;:&quot;默认安全设置&quot;,&quot;ja&quot;:&quot;セキュリティー基本設定&quot;}" editLevel="user" component="TextFieldEditor" value="0" />
+			<entry key="duplex" name="{&quot;ko&quot;:&quot;이전글/다음글 사용 여부&quot;,&quot;en&quot;:&quot;Use Previous Post/Next Post&quot;,&quot;zh&quot;:&quot;是否使用上一篇/下一篇&quot;,&quot;ja&quot;:&quot;前へ/次へ使用有無&quot;}" editLevel="user" component="BooleanFieldEditor" value="true" />
+			<entry key="readCntPopup" name="{&quot;ko&quot;:&quot;조회수에 조회자 팝업 사용 여부&quot;,&quot;en&quot;:&quot;Open a popup on click&quot;,&quot;zh&quot;:&quot;查看浏览次数时是否使用弹出窗&quot;,&quot;ja&quot;:&quot;照会数をクリックした際のポップアップ表示有無&quot;}" editLevel="user" component="BooleanFieldEditor" value="true" />
+			<entry key="listIdRownum" name="{&quot;ko&quot;:&quot;목록 번호에 rownum 표시&quot;,&quot;en&quot;:&quot;Display rownum in List Number&quot;,&quot;zh&quot;:&quot;在目录序号中显示rownum&quot;,&quot;ja&quot;:&quot;リスト番号にrownum表示&quot;}" editLevel="admin" component="BooleanFieldEditor" value="false" />
+			<entry key="levelAnnounce" name="{&quot;ko&quot;:&quot;고정게시 맵적용여부(미적용 시 축별 적용)&quot;,&quot;en&quot;:&quot;Apply Fixed Display Map (Apply Axis when not applied)&quot;,&quot;zh&quot;:&quot;是否适用固定发布映射(不适用时适用于每个轴)&quot;,&quot;ja&quot;:&quot;マップ固定掲示有無(未適用時、軸別に適用)&quot;}" editLevel="admin" component="BooleanFieldEditor" value="true" />
+			<entry key="marketFileSize" name="{&quot;ko&quot;:&quot;파일별 최대크기(MB)&quot;,&quot;en&quot;:&quot;Max file size(MB)&quot;,&quot;zh&quot;:&quot;每个文件的最大大小(MB)&quot;,&quot;ja&quot;:&quot;ファイル最大サイズ(MB)&quot;}" editLevel="user" component="TextFieldEditor" value="-1" />
+			<entry key="marketTotalSize" name="{&quot;ko&quot;:&quot;문서당 최대크기(MB)&quot;,&quot;en&quot;:&quot;Max document size(MB)&quot;,&quot;zh&quot;:&quot;每个文档的最大大小(MB)&quot;,&quot;ja&quot;:&quot;文書最大サイズ(MB)&quot;}" editLevel="user" component="TextFieldEditor" value="-1" />
+			<entry key="fvrtIndexUrl" name="{&quot;ko&quot;:&quot;북마크IndexUrl&quot;,&quot;en&quot;:&quot;Bookmark IndexUrl&quot;,&quot;zh&quot;:&quot;书签IndexUrl&quot;,&quot;ja&quot;:&quot;ブックマークIndexUrl&quot;}" editLevel="admin" component="TextFieldEditor" value="B:/market/usr.index.jsp?url=" />
+		</config>
+	</tabs>
+</configuration>

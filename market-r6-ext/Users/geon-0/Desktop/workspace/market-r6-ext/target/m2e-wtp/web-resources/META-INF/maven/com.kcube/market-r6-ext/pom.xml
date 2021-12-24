@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.kcube</groupId>
+  <artifactId>market-r6-ext</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>market-r6-ext Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+   <properties>
+		<release.version>0.6</release.version>
+		<jdk.version>1.8</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<yuicompressor.version>2.4.7</yuicompressor.version>
+		<yuicompressor-jar>${settings.localRepository}\com\yahoo\platform\yui\yuicompressor\${yuicompressor.version}\yuicompressor-${yuicompressor.version}.jar</yuicompressor-jar>
+		<!-- 개발 환경에 따라 로컬인지 개발서버인지 운영인지 나눠서 작업하고 싶을 경우 사용
+			현재는 해당 BUILD 값에 따라서 license 파일을  개발용 운영용으로 바꿔줌. 
+			운영 라이센스를 적용하고 싶으면 maven install 시에  Profiles 옵션으로  real 을 주면 운영라이센스로 war 가 묶인다. 
+		-->
+		<BUILD>dev</BUILD>
+ 	 <!-- 1) javac 를 eclipse 와 project 에 직접 설정해주어도 maven update 시, 회귀 현상 발생하기도 함.  -->
+	<maven.compiler.target>1.8</maven.compiler.target> 
+    <maven.compiler.source>1.8</maven.compiler.source>
+  </properties>
+  
+ <!--  <profiles>
+  운영용 라이센스를 적용하기 위한 환경값
+	<profile>
+		<id>real</id>
+		<properties>
+			<BUILD>real</BUILD>
+		</properties>
+	</profile>
+  </profiles> -->
+  
+   <!-- local repository -->
+  <repositories>
+		<repository>
+			<id>kcube-local</id>
+			<name>local repository</name>
+			<url>file://${pom.basedir}/lib</url>
+		</repository>
+  </repositories>
+
+  <dependencies>
+    	<dependency>
+     		<groupId>junit</groupId>
+      		<artifactId>junit</artifactId>
+      		<version>4.11</version>
+     		<scope>test</scope>
+    	</dependency>
+    <!-- project 를 추가하면 부모 project 의 provided 항목은 depency 가 되지않음. 따라서 원하는 것은 
+			추가해 줘야함. -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.2.1</version>
+			<scope>provided</scope>
+		</dependency>
+	<!-- 3) .js를 min.js 로 바꾸어주는 역할의 minify -->
+		<dependency>
+			<groupId>com.yahoo.platform.yui</groupId>
+			<artifactId>yuicompressor</artifactId>
+			<version>${yuicompressor.version}</version>
+		</dependency>
+	<!-- 99. app war 파일 dependency 추가 -->
+ 		<dependency>
+			<groupId>com.kcube</groupId>
+			<artifactId>BdItem</artifactId>
+			<version>${release.version}</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/war/BdItem-${release.version}.war</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.kcube</groupId>
+			<artifactId>KItem</artifactId>
+			<version>${release.version}</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/war/KItem-${release.version}.war</systemPath>
+		</dependency> 
+	<!-- 99. ojdbc8 드라이버 추가 -->
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>19.3.0.0</version>
+		</dependency>
+	<!-- 4) /lib 에 r6-dep.jar, r6.jar 사용. 선행 : /lib에 두 jar가 먼저 존재할 것 -->
+		<dependency>
+			<groupId>com.kcube</groupId>
+			<artifactId>r6</artifactId>
+			<version>${release.version}</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/lib/r6-dep-${release.version}.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.kcube</groupId>
+			<artifactId>r6-dep</artifactId>
+			<version>${release.version}</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/lib/r6-${release.version}.jar</systemPath>
+		</dependency>
+	<!-- Start r6 project 를 dependency 로 추가 
+		<dependency>
+			<groupId>com.kcube</groupId>
+			<artifactId>r6</artifactId>
+			<version>1.0</version>
+			<classifier>kcube</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.kcube</groupId>
+			<artifactId>r6</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>-->
+  </dependencies>
+
+  <build>
+    <finalName>market-r6-ext</finalName>
+   <!-- 1.8 compile 플러그인 -->
+	<plugins>
+		<!--  5) maven clean 플러그인 -->
+		<plugin>
+          	<artifactId>maven-clean-plugin</artifactId>
+          	<version>3.1.0</version>
+        	<configuration>
+				<failOnError>false</failOnError>
+			</configuration>
+        </plugin>
+        <!-- 6) maven compile 플러그인 -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.8.0</version>
+			<configuration>
+				<source>${jdk.version}</source>
+				<target>${jdk.version}</target>
+				<encoding>${project.build.sourceEncoding}</encoding>
+			</configuration>
+		</plugin>
+				
+		<!--  7) target/classes 에 java 소스 폴더에 있는 xml 과 properties 파일을 copy 하는 플러그인.
+				선행: /cst/[site명 또는 프로젝트명]/src,conf 폴더 생성 -->
+		<plugin>
+			<artifactId>maven-resources-plugin</artifactId>
+			<version>3.1.0</version>
+			<executions>
+				<execution>
+					<id>copy-resources</id>
+					<phase>validate</phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>target/classes</outputDirectory>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<resources>
+							<resource>
+								<directory>/market/src</directory>
+								<includes>
+									<include>**/*.xml</include>
+									<include>**/*.properties</include>
+								</includes>
+								<excludes>
+									<exclude>**/*.conf.xml</exclude>
+								</excludes>
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+				<execution>
+					<id>copy-conf</id>
+					<!-- here the phase you need -->
+					<phase></phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>target/classes/r6-app/customize</outputDirectory>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<overwrite>true</overwrite>
+						<resources>
+							<resource>
+								<directory>/market/conf</directory>
+								<includes>
+									<include>**.conf.xml</include>
+								</includes>
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
+		<!-- 8) src/main/java 외에 다른 java 소스 폴더도 compile 에 포함시키는 플러그인.
+				임의의 java 소스는 동작과 무관합니다.-->
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>build-helper-maven-plugin</artifactId>
+			<version>3.0.0</version>
+			<executions>
+				<execution>
+					<phase>generate-sources</phase>
+					<goals>
+						<goal>add-source</goal>
+					</goals>
+					<configuration>
+						<sources>
+							<source>/market/src</source>
+						</sources>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
+		
+		<!-- 9) compile 된 파일이 모이는 target/classes 의 모든 properties 파일을 인코딩 하는 플러그인 -->
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>native2ascii-maven-plugin</artifactId>
+			<version>2.0.1</version>
+			<executions>
+				<execution>
+					<id>native2ascii-main</id>
+					<goals>
+						<goal>inplace</goal>
+					</goals>
+					<phase>process-resources</phase>
+					<configuration>
+						<dir>target/classes</dir>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<includes>
+							<include>**/*.properties</include>
+						</includes>
+						<excludes>
+							<exclude></exclude>
+						</excludes>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
+		<!-- 10) ant로 r6 war 파일과 app war 파일을 output folder 에 압축 해제 한 후 알맞게 배치한다. 
+				선행:
+				- /output 폴더가 commit 되지 않도록 svn에 /output ignore 시키기 
+				- /war, /ant 폴더 생성 및 deploy할 *.war 파일과 build.xml 을 작성 (r6-1.0.war, build.xml)
+		-->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-antrun-plugin</artifactId>
+			<version>1.8</version>
+			<executions>
+				<!-- war 디렉토리에 들어있는 패키지 war 파일들을 output 폴더에 압축해제하는 ant 이다.
+					tomcat에 패키지 파일들을 적용하기 위해서는 반드시 로컬 output 디렉토리에 압축해제 해놔야 한다.
+					그리고, output 안에 들어있는 압축해제된 파일들은 절대로 수정해서는 안되고, 수정시에는 파일을 web 밑으로 copy 하여
+					프로젝트에서 재정의 한다. 
+					output 디렉토리는 svn:ignore 옵션을 주어 자신의 로컬 이클립스에만 파일이 남아있고 svn 서버에는 동기화 시키지않는다.-->
+				<execution>
+					<id>app-dep</id>
+					<goals>
+						<goal>run</goal>
+					</goals>
+					<configuration>
+						<target>
+							<ant antfile="${pom.basedir}/ant/app-dep.xml" />
+						</target>
+					</configuration>
+				</execution>
+				<!-- 
+						ant js 구문을 실행
+					 -->
+					<execution>
+						<id>js</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<concat destfile="web/market/market.js"
+									encoding="${project.build.sourceEncoding}">
+									<fileset dir="web/market/js">
+										<include name="**/*.js" />
+									</fileset>
+								</concat>
+								<apply executable="java" parallel="false" dest="web/market">
+									<fileset dir="web/market">
+										<include name="market.js" />
+									</fileset>
+									<arg line="-jar" />
+									<arg path="${yuicompressor-jar}" />
+									<arg line="--charset ${project.build.sourceEncoding}" />
+									<arg line="-o" />
+									<targetfile />
+									<mapper type="glob" from="market.js" to="market_min.js" />
+								</apply>
+							</target>
+						</configuration>
+					</execution>
+					<!-- 
+						ant css 구문을 실행 
+					-->
+					<execution>
+						<id>css</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<concat destfile="web/market/market.css"
+									encoding="${project.build.sourceEncoding}">
+									<fileset dir="web/market/css">
+										<include name="**/*.css" />
+									</fileset>
+								</concat>
+								<apply executable="java" parallel="false" dest="web/market">
+									<fileset dir="web/market">
+										<include name="market.css" />
+									</fileset>
+									<arg line="-jar" />
+									<arg path="${yuicompressor-jar}" />
+									<arg line="--charset ${project.build.sourceEncoding}" />
+									<arg line="-o" />
+									<targetfile />
+									<mapper type="glob" from="market.css" to="market_min.css" />
+								</apply>
+							</target>
+						</configuration>
+					</execution>
+				 <execution>
+					<id>license</id>
+					<goals>
+						<goal>run</goal>
+					</goals>
+					<phase>validate</phase>
+					<configuration>
+						<target>
+							<copy overwrite="true" file="src/main/resources/license_${BUILD}.xml" tofile="target/classes/license.xml" />
+						</target>
+					</configuration>
+				</execution>
+			</executions>
+			<!-- 12) /ant/app-dep.xml : ant build 시, <taskdef resource="net/sf/antcontrib/antlib.xml" /> 에 필요  -->
+			<dependencies>
+				<dependency>
+					<groupId>ant-contrib</groupId>
+					<artifactId>ant-contrib</artifactId>
+					<version>1.0b3</version>
+					<exclusions>
+						<exclusion>
+							<artifactId>ant</artifactId>
+							<groupId>ant</groupId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</plugin>
+		
+		<!-- 11) validate..? target/classes 에 java 소스 폴더에 있는 xml 과 proerties 파일을 copy 는 플러그인 -->
+		<plugin>
+			<artifactId>maven-resources-plugin</artifactId>
+			<version>3.1.0</version>
+			<executions>
+				<execution>
+					<id>copy-resources</id>
+					<phase>validate</phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>target/classes</outputDirectory>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<resources>
+							<resource>
+								<directory>/market/src</directory>
+								<includes>
+									<include>**/*.xml</include>
+									<include>**/*.properties</include>
+								</includes>
+								<excludes>
+									<exclude>**/*.conf.xml</exclude>
+								</excludes>
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+				<execution>
+					<id>copy-conf</id>
+					<!-- here the phase you need -->
+					<phase>validate</phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>target/classes/r6-app/customize</outputDirectory>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<overwrite>true</overwrite>
+						<resources>
+							<resource>
+								<directory>/market/conf</directory>
+								<includes>
+									<include>**.conf.xml</include>
+								</includes>
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
+		<!--  13) war  -->
+		<plugin>
+          	<artifactId>maven-war-plugin</artifactId>
+          	<version>3.2.2</version>
+         	<configuration>
+			<warSourceDirectory>web</warSourceDirectory>
+			<webResources>
+				<resource>
+					<directory>web</directory>
+				</resource>
+				<resource>
+					<directory>output</directory>
+				</resource>
+			</webResources>
+			</configuration>
+        </plugin>
+	</plugins>
+  </build>
+</project>
